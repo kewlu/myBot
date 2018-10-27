@@ -6,19 +6,17 @@ using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using System.Net.Http;
+using MyBot.BLL.Contracts;
 
-namespace MyBot.Models
+namespace MyBot.BLL.Core
 {
-    public class Message : IMessage
+    public class MessageService : IMessageService
     {
-        private readonly IBot _bot;
+        private readonly IBotService _bot;
 
+        private readonly ILogger<MessageService> _logger;        
 
-
-        private readonly ILogger<Message> _logger;
-        
-
-        public Message(IBot bot, ILogger<Message> logger)
+        public MessageService(IBotService bot, ILogger<MessageService> logger)
         {
             _bot = bot;
             _logger = logger;
@@ -33,12 +31,11 @@ namespace MyBot.Models
             var message = update.Message;
             _logger.LogInformation("Received Message from {0}: {1}", message.Chat.Id, message.Text);
 
-            var commands = Bot.Commands;
-            foreach (var command in commands)
-                Console.WriteLine(command);
-            foreach (var command in commands)
+            var _commands = BotService.Commands;
+            //var _currentquizes = BotService.CurrentQuizesList;
+
+            foreach (var command in _commands)
             {
-                Console.WriteLine(command.ToString() + " ? " + message.Text);
                 if (command.Contains(message.Text))
                 {
                     Console.WriteLine(command.ToString() + "==" + message.Text + "Execute Command");
@@ -46,11 +43,8 @@ namespace MyBot.Models
                         await _bot.Client.SendTextMessageAsync(message.Chat.Id, "упс, что-то пошло не так");
                     break;
                 }
-
             }
             return;
-
-            //if 
         }
     }
 }

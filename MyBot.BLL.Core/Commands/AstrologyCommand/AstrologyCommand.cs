@@ -9,7 +9,7 @@ using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 
 
-namespace MyBot.Models.Commands.AstrologyCommand
+namespace MyBot.BLL.Core.Commands.AstrologyCommand
 {
     public sealed class AstrologyCommand : Command
     {

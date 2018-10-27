@@ -2,10 +2,10 @@
 using Telegram.Bot.Types;
 using System.Threading.Tasks;
 using System;
-using MyBot.Models;
+using MyBot.BLL.Core;
 
 
-namespace MyBot.Models.Commands
+namespace MyBot.BLL.Core.Commands
 {
     public class HelloCommand : Command
     {

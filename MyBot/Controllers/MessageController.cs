@@ -4,15 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot.Types;
-using MyBot.Models;
+using MyBot.BLL.Contracts;
+
 
 namespace MyBot.Controllers
 {
     [Route("api/update")]
     public class MessageController : Controller
     {
-        private readonly IMessage _message;
-        public MessageController(IMessage message)
+        private readonly IMessageService _message;
+        public MessageController(IMessageService message)
         {
             _message = message;
         }

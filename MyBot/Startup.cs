@@ -9,9 +9,12 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MyBot.Models;
+using MyBot.BLL.Contracts;
+using MyBot.BLL.Core;
+using MyBot.Entities;
 
-namespace MyBot
+
+namespace MyBot.PL
 {
     public class Startup
     {
@@ -26,8 +29,11 @@ namespace MyBot
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddScoped<IMessage, Message>();
-            services.AddSingleton<IBot, Bot>();
+
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddSingleton<IBotService, BotService>();
+            services.AddScoped<IQuizService, QuizService>();
+            
 
             services.Configure<BotConfig>(Configuration.GetSection("BotConfiguration"));
         }

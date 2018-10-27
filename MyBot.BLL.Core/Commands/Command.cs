@@ -3,7 +3,7 @@ using Telegram.Bot.Types;
 using System.Threading.Tasks;
 using System;
 
-namespace MyBot.Models.Commands
+namespace MyBot.BLL.Core.Commands
 {
     public abstract class Command
     {

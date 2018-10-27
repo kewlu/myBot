@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Telegram.Bot;
-using MyBot.Models.Commands;
+using MyBot.BLL.Core.Commands;
 using System.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using MihaZupan;
-using Microsoft.AspNetCore.Mvc;
 using System;
-using MyBot.Models.Commands.AstrologyCommand;
-namespace MyBot.Models
+using MyBot.BLL.Core.Commands.AstrologyCommand;
+using MyBot.BLL.Contracts;
+using MyBot.Entities;
+
+namespace MyBot.BLL.Core
 {
-    public class Bot : IBot
+    public class BotService : IBotService
     {
         private readonly BotConfig _config;
 
-        public Bot(IOptions<BotConfig> config)
+        public BotService(IOptions<BotConfig> config)
         {
 
             _config = config.Value;
@@ -24,10 +26,11 @@ namespace MyBot.Models
             Console.WriteLine("Client created:{0} \n \t {1} \n \t {2}", _config.BotToken, _config.Socks5Host, _config.Socks5Port);
 
 
-            InitAsync = _SetWebhookAsync();
+            //InitAsync = _SetWebhookAsync();
             //Add commands
             commandsList = new List<Command>();
             commandsList.Add(new HelloCommand());
+            commandsList.Add(new StartQuizCommand());
             //commandsList.Add(new WoLCommand());
       
             foreach(var _sign in AstroSigns)
@@ -45,18 +48,21 @@ namespace MyBot.Models
                                         "лев", "дева", "весы", "скорпион",
                                    "стрелец", "козерог", "водолей", "рыба"};
         }
-        //public static SqlConnectionStringBuilder Str_Sql;
+
+        public static List<long> CurrentQuizesList { get; set; }
 
         public TelegramBotClient Client { get; }
 
         public Task  InitAsync { get; set; }
-        private async Task<bool> _SetWebhookAsync()
-        {
-            await Client.SetWebhookAsync(_config.Webhook);
-            foreach (var elem in Commands)
-                Console.WriteLine(elem.Name);
-            return true;
-        }
+
+
+
+        //private async Task<bool> _SetWebhookAsync()
+        //{
+        //    if (_config.Webhook != null)
+        //        await Client.SetWebhookAsync(_config.Webhook);
+        //    return true;
+        //}
 
     }
 }

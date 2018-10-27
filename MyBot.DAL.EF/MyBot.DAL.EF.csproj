@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyBot.DAL\MyBot.DAL.Contracts.csproj" />
+    <ProjectReference Include="..\MyBot.Entities\MyBot.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

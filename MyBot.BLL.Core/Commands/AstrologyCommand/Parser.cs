@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 
-namespace MyBot.Models.Commands.AstrologyCommand
+namespace MyBot.BLL.Core.Commands.AstrologyCommand
 {
     public class Parser
     {

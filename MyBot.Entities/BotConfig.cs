@@ -1,7 +1,9 @@
-﻿namespace MyBot.Models
+﻿namespace MyBot.Entities
 {
     public class BotConfig
     {
+        public string DbConnectionString { get; set; }
+
         public string BotToken { get; set; }
 
         public string Socks5Host { get; set; }
