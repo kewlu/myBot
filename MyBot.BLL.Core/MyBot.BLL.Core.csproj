@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyBot.BLL\MyBot.BLL.Contracts.csproj" />
+    <ProjectReference Include="..\MyBot.BLL.Contracts\MyBot.BLL.Contracts.csproj" />
     <ProjectReference Include="..\MyBot.DAL\MyBot.DAL.Contracts.csproj" />
     <ProjectReference Include="..\MyBot.Entities\MyBot.Entities.csproj" />
   </ItemGroup>
