@@ -32,7 +32,7 @@ namespace MyBot.BLL.Core
             _logger.LogInformation("Received Message from {0}: {1}", message.Chat.Id, message.Text);
 
             var _commands = BotService.Commands;
-            //var _currentquizes = BotService.CurrentQuizesList;
+
 
             foreach (var command in _commands)
             {

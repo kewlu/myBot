@@ -28,9 +28,12 @@ namespace MyBot.BLL.Core
 
             //InitAsync = _SetWebhookAsync();
             //Add commands
+            ActiveQuiz = new Dictionary<Int64, IQuizService>(); 
+
             commandsList = new List<Command>();
             commandsList.Add(new HelloCommand());
             commandsList.Add(new StartQuizCommand());
+            commandsList.Add(new StopQuizCommand());
             //commandsList.Add(new WoLCommand());
       
             foreach(var _sign in AstroSigns)
@@ -49,7 +52,7 @@ namespace MyBot.BLL.Core
                                    "стрелец", "козерог", "водолей", "рыба"};
         }
 
-        public static List<long> CurrentQuizesList { get; set; }
+        public static Dictionary<Int64, IQuizService> ActiveQuiz;
 
         public TelegramBotClient Client { get; }
 

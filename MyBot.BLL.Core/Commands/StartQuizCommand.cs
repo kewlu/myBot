@@ -10,27 +10,29 @@ using System.Threading;
 
 namespace MyBot.BLL.Core.Commands
 {
-    class StartQuizCommand : Command
+    public class StartQuizCommand : Command
     {
-        public override string Name { get => "/Count"; set => throw new NotImplementedException(); }
+        public override string Name { get => "/StartQuiz"; set => throw new NotImplementedException(); }
         public override bool Contains(string command)
         {
             return (command == this.Name);
         }
-
+  
         public override async Task<bool> ExecuteAsync(Message message, TelegramBotClient client)
         {
-            var _CurrentQuizedList = BotService.CurrentQuizesList;
-            //foreach (var _chatId in _CurrentQuizedList)
-            //{
-            //    if (message.Chat.Id == _chatId)
-            //        return true;
-            //}
+            var _activeQuiz = BotService.ActiveQuiz;
+            var _message = message;
+
             await client.SendTextMessageAsync(message.Chat.Id, "Ну что ронарод погнали нахой!");
-            //BotService.CurrentQuizesList.Add(new QuizService(client, message.Chat.Id));
+            if (_activeQuiz.ContainsKey(_message.Chat.Id))
+            {
+                await client.SendTextMessageAsync(_message.Chat.Id, "Уже запущено");
+                return true ;
+            }
             var _quizService = new QuizService(client, message.Chat.Id);
-            //BotService.CurrentQuizesList.Add(message.Chat.Id);
-            await _quizService.Start();
+            BotService.ActiveQuiz.Add(_message.Chat.Id, _quizService);
+            Thread th = new Thread(_quizService.Start);
+            th.Start();
             await client.SendTextMessageAsync(message.Chat.Id, "test");
             return true;
         }

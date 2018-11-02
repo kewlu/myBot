@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyBot.BLL.Core\MyBot.BLL.Core.csproj" />
-    <ProjectReference Include="..\MyBot.BLL\MyBot.BLL.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
