@@ -43,6 +43,10 @@ namespace MyBot.BLL.Core
                         await _bot.Client.SendTextMessageAsync(message.Chat.Id, "упс, что-то пошло не так");
                     break;
                 }
+                if (BotService.ActiveQuiz.ContainsKey(message.Chat.Id))
+                {
+                    await BotService.ActiveQuiz[message.Chat.Id].CheckMessage(message.Text);
+                }
             }
             return;
         }

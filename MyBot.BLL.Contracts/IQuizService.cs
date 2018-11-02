@@ -15,6 +15,8 @@ namespace MyBot.BLL.Contracts
 
         //void Start();
 
-        bool Stop();
+        Task<bool> Stop();
+
+        Task<bool> CheckMessage(string str);
     }
 }

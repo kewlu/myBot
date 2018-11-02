@@ -45,11 +45,22 @@ namespace MyBot.BLL.Core
             return true;
         }
 
-        public bool Stop()
+        public async Task<bool> Stop()
         {
             _disposed = true;
-            Task<bool> T = Send("End!");
+            await Send("End!");
+            BotService.ActiveQuiz.Remove(chatId);
             return true;
+        }
+
+        public async Task<bool> CheckMessage(string str)
+        {
+            if(a.ToString()==str)
+            {
+                await Stop();
+                return true;
+            }
+            return false;
         }
     }
 }

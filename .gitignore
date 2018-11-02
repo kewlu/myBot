@@ -32,3 +32,4 @@ _ReSharper*/
 #Nuget packages folder
 packages/
 /MyBot.BLL.Core/Commands/WoLCommand.cs
+/MyBot/Properties/launchSettings.json
