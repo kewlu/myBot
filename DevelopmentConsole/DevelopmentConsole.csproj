@@ -1,15 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.1.4" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\MyBot.BLL.Contracts\MyBot.BLL.Contracts.csproj" />
+    <ProjectReference Include="..\MyBot.BLL.Core\MyBot.BLL.Core.csproj" />
+    <ProjectReference Include="..\MyBot.DAL.EF\MyBot.DAL.EF.csproj" />
     <ProjectReference Include="..\MyBot.DAL\MyBot.DAL.Contracts.csproj" />
     <ProjectReference Include="..\MyBot.Entities\MyBot.Entities.csproj" />
   </ItemGroup>
