@@ -11,7 +11,7 @@ namespace MyBot.DAL.EF
         private IMainContext db;
 
         private QueryRepository queryRepository;
-        //private UserRepository userRepository;
+        private UserRepository userRepository;
 
         public Worker(IMainContext context)
         {
@@ -28,16 +28,39 @@ namespace MyBot.DAL.EF
             }
         }
 
-        public IRepository<User> Users => throw new NotImplementedException();
-
-        public void Dispose()
+        public IRepository<User> Users
         {
-            throw new NotImplementedException();
+            get
+            {
+                if (userRepository == null)
+                    userRepository = new UserRepository(db);
+                return userRepository;
+            }
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            db.SaveChanges();
         }
+        #region Disposed pattern
+
+        private bool disposed = false;
+        public virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
