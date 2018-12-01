@@ -3,7 +3,7 @@ using Telegram.Bot.Types;
 using System.Threading.Tasks;
 using System;
 using MyBot.BLL.Core;
-
+using MyBot.BLL.Contracts;
 
 namespace MyBot.BLL.Core.Commands
 {
@@ -17,9 +17,9 @@ namespace MyBot.BLL.Core.Commands
             return (command == this.Name);
         }
 
-        public override async Task<bool> ExecuteAsync(Telegram.Bot.Types.Message message, TelegramBotClient client)
+        public override async Task<bool> ExecuteAsync(Telegram.Bot.Types.Message message, IBotService bot)
         {           
-            await client.SendTextMessageAsync(message.Chat.Id, "тут тип гороскоп. чтобы получить гороскоп на сегодня. пиши аля  " + '\u0022' + "/овен" + '\u0022' + "," + '\u0022' + " /телец" + '\u0022' + "ну ты понел");
+            await bot.Client.SendTextMessageAsync(message.Chat.Id, "тут тип гороскоп. чтобы получить гороскоп на сегодня. пиши аля  " + '\u0022' + "/овен" + '\u0022' + "," + '\u0022' + " /телец" + '\u0022' + "ну ты понел");
             return true;
         }
     }

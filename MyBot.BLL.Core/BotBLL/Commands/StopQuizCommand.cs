@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-
+using MyBot.BLL.Contracts;
 namespace MyBot.BLL.Core.Commands
 {
     public class StopQuizCommand : Command
@@ -16,13 +14,13 @@ namespace MyBot.BLL.Core.Commands
             return (command == this.Name);
         }
 
-        public override async Task<bool> ExecuteAsync(Message message, TelegramBotClient client)
+        public override async Task<bool> ExecuteAsync(Message message, IBotService bot)
         {
             var _message = message;
 
             if(!BotService.ActiveQuiz.ContainsKey(_message.Chat.Id))
             {
-                await client.SendTextMessageAsync(_message.Chat.Id, "В этом чате ничего не запущено! Чтобы запустить /Count");
+                await bot.Client.SendTextMessageAsync(_message.Chat.Id, "В этом чате ничего не запущено! Чтобы запустить /Count");
             }
             var _quizService = BotService.ActiveQuiz[_message.Chat.Id];
             await _quizService.Stop();

@@ -9,14 +9,14 @@ namespace MyBot.BLL.Contracts
 {
     public interface IQuizService
     {
-        TelegramBotClient client { get; }
+        TelegramBotClient _client { get; }
 
-        long chatId { get; }
+        long _chatId { get; }
 
         //void Start();
 
         Task<bool> Stop();
 
-        Task<bool> CheckMessage(string str);
+        Task<bool> CheckMessage(Message message);
     }
 }

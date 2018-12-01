@@ -9,7 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MyBot.BLL.Contracts\MyBot.BLL.Contracts.csproj" />
     <ProjectReference Include="..\MyBot.BLL.Core\MyBot.BLL.Core.csproj" />
+    <ProjectReference Include="..\MyBot.DAL.EF\MyBot.DAL.EF.csproj" />
+    <ProjectReference Include="..\MyBot.DAL\MyBot.DAL.Contracts.csproj" />
+    <ProjectReference Include="..\MyBot.Entities\MyBot.Entities.csproj" />
   </ItemGroup>
 
 </Project>

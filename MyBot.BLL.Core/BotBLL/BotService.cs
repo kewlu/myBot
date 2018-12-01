@@ -8,6 +8,7 @@ using MihaZupan;
 using System;
 using MyBot.BLL.Core.Commands.AstrologyCommand;
 using MyBot.BLL.Contracts;
+using MyBot.BLL.Core.BotBLL.Commands;
 using MyBot.Entities;
 
 namespace MyBot.BLL.Core
@@ -16,15 +17,19 @@ namespace MyBot.BLL.Core
     {
         private readonly BotConfig _config;
 
-        public BotService(IOptions<BotConfig> config)
-        {
+        public IQueryService QueryService { get; set; }
+        public IUserService UserService { get; set; }
 
+        public BotService(IOptions<BotConfig> config, IQueryService queryService, IUserService userService)
+        {
+            QueryService = queryService;
+            UserService = userService;
             _config = config.Value;
             Client = string.IsNullOrEmpty(_config.Socks5Host)
                 ? new TelegramBotClient(_config.BotToken)
                 : new TelegramBotClient(_config.BotToken, new HttpToSocks5Proxy(_config.Socks5Host, _config.Socks5Port));
             Console.WriteLine("Client created:{0} \n \t {1} \n \t {2}", _config.BotToken, _config.Socks5Host, _config.Socks5Port);
-
+            
 
             //InitAsync = _SetWebhookAsync();
             //Add commands
@@ -34,6 +39,7 @@ namespace MyBot.BLL.Core
             commandsList.Add(new HelloCommand());
             commandsList.Add(new StartQuizCommand());
             commandsList.Add(new StopQuizCommand());
+            commandsList.Add(new ScoreCommand());
             //commandsList.Add(new WoLCommand());
       
             foreach(var _sign in AstroSigns)

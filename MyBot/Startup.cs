@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using MyBot.BLL.Contracts;
 using MyBot.BLL.Core;
 using MyBot.Entities;
+using MyBot.DAL.Contracts;
+using MyBot.DAL.EF;
 
 
 namespace MyBot.PL
@@ -28,12 +30,16 @@ namespace MyBot.PL
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = "Server=(localdb)\\mssqllocaldb;Database=botdb;Trusted_Connection=True;";
             services.AddMvc();
 
             services.AddScoped<IMessageService, MessageService>();
             services.AddSingleton<IBotService, BotService>();
-            services.AddScoped<IQuizService, QuizService>();
-            
+            services.AddTransient<IQueryService, QueryService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IMainContext, MainContext>(contextProvider => { return new MainContext(connectionString); });
+            services.AddTransient<IWorker, Worker>();
+
 
             services.Configure<BotConfig>(Configuration.GetSection("BotConfiguration"));
         }

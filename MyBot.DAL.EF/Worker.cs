@@ -38,6 +38,8 @@ namespace MyBot.DAL.EF
             }
         }
 
+
+
         public void Save()
         {
             db.SaveChanges();

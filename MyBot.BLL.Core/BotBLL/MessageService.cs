@@ -16,9 +16,10 @@ namespace MyBot.BLL.Core
 
         private readonly ILogger<MessageService> _logger;        
 
-        public MessageService(IBotService bot, ILogger<MessageService> logger)
+        public MessageService(IBotService bot, /*IQueryService queryService,*/ ILogger<MessageService> logger)
         {
             _bot = bot;
+            //_queryService = queryService;
             _logger = logger;
         }
 
@@ -34,19 +35,23 @@ namespace MyBot.BLL.Core
             var _commands = BotService.Commands;
 
 
+
+
             foreach (var command in _commands)
             {
                 if (command.Contains(message.Text))
                 {
                     Console.WriteLine(command.ToString() + "==" + message.Text + "Execute Command");
-                    if (!await command.ExecuteAsync(message, _bot.Client))
+                    if (!await command.ExecuteAsync(message, _bot))
                         await _bot.Client.SendTextMessageAsync(message.Chat.Id, "упс, что-то пошло не так");
                     break;
                 }
-                if (BotService.ActiveQuiz.ContainsKey(message.Chat.Id))
-                {
-                    await BotService.ActiveQuiz[message.Chat.Id].CheckMessage(message.Text);
-                }
+            }
+
+            if (BotService.ActiveQuiz.ContainsKey(message.Chat.Id))
+            {
+                await BotService.ActiveQuiz[message.Chat.Id].CheckMessage(message);
+                return;
             }
             return;
         }

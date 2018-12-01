@@ -41,5 +41,10 @@ namespace MyBot.DAL.EF
         {
             db.Queries.Update(item);
         }
+
+        public IEnumerable<Query> GetAll()
+        {
+            return db.Queries;
+        }
     }
 }

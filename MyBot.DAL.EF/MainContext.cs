@@ -10,7 +10,7 @@ namespace MyBot.DAL.EF
 {
     public class MainContext : DbContext, IMainContext 
     {
-        private string ConnectionString { get; set; }
+        private string ConnectionString { get ; set; }
         
         public DbSet<Query> Queries { get; set; }
         public DbSet<User> Users { get; set; }

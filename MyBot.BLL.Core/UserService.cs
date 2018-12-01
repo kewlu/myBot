@@ -19,7 +19,7 @@ namespace MyBot.BLL.Core
 
         public bool AddUser(User _user)
         {
-            //if (Database.Users.GetAll().Any(x=> x.Id == _user.Id))
+            //if (Database.Users.GetAll().Any(x=> x.Id == _user.Id)
             //{
             //    return false;
             //}
@@ -37,6 +37,14 @@ namespace MyBot.BLL.Core
         {
             return Database.Users.Get(_Id);
         }
+
+        public bool UpdateUser(User item)
+        {
+            Database.Users.Update(item);
+            Database.Save();
+            return true;
+        }
+
 
         //public User GetByUserId(long UserId)
         //{

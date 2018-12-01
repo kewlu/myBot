@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using System.Net.Sockets;
-
+using MyBot.BLL.Contracts;
 namespace MyBot.BLL.Core.Commands
 {
     public class WoLCommand : Command
@@ -14,7 +14,7 @@ namespace MyBot.BLL.Core.Commands
 
         private readonly string ip = "93.179.80.156";
         private readonly string mac = "70:85:C2:77:9C:BA";
-        public override async Task<bool> ExecuteAsync(Telegram.Bot.Types.Message message, TelegramBotClient client)
+        public override async Task<bool> ExecuteAsync(Telegram.Bot.Types.Message message, IBotService bot)
         {
             var WoLclient = new UdpClient();
             var data = new byte[102];
@@ -27,7 +27,7 @@ namespace MyBot.BLL.Core.Commands
                 for (int x = 0; x < 6; x++)
                     data[start + i * 6 + x] = (byte)Convert.ToInt32(mac.Split(mac.Contains("-") ? '-' : ':'));
             WoLclient.Send(data, data.Length, ip, 7);
-            await client.SendTextMessageAsync(message.Chat.Id, "hello, dude!");
+            await bot.Client.SendTextMessageAsync(message.Chat.Id, "hello, dude!");
             return true;
 
         }

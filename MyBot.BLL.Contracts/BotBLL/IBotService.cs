@@ -8,5 +8,8 @@ namespace MyBot.BLL.Contracts
         TelegramBotClient Client { get; }
 
         Task InitAsync { get; }
+
+        IQueryService QueryService { get; }
+        IUserService UserService { get; }
     }
 }

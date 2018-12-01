@@ -7,7 +7,7 @@ using Telegram.Bot.Types;
 using System.Net.Http;
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
-
+using MyBot.BLL.Contracts;
 
 namespace MyBot.BLL.Core.Commands.AstrologyCommand
 {
@@ -23,7 +23,7 @@ namespace MyBot.BLL.Core.Commands.AstrologyCommand
                 Sign = _sign;
         }
 
-        public override async Task<bool> ExecuteAsync(Telegram.Bot.Types.Message message, TelegramBotClient client)
+        public override async Task<bool> ExecuteAsync(Telegram.Bot.Types.Message message, IBotService bot)
         {
 
             string url = "http://mygazeta.com/гороскоп/"+ Sign + "/гороскоп-" + Sign + "-" 
@@ -47,7 +47,7 @@ namespace MyBot.BLL.Core.Commands.AstrologyCommand
                 if ((i % 2 == 0) && (i != 22) && (i < 25))
                     all += elem;                
             }
-            await client.SendTextMessageAsync(message.Chat.Id, all);
+            await bot.Client.SendTextMessageAsync(message.Chat.Id, all);
             return true;
         }
 

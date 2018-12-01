@@ -8,5 +8,7 @@ namespace MyBot.BLL.Contracts
     public interface IQueryService
     {
         Query GetById(long bookId);
+
+        bool AddQuery(Query query);
     }
 }

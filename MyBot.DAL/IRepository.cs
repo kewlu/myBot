@@ -6,6 +6,7 @@ namespace MyBot.DAL.Contracts
 {
     public interface IRepository<T> where T : class
     {
+        IEnumerable<T> GetAll();
         T Get(Int64 id);
         IEnumerable<T> Find(Func<T, Boolean> predicate);
         void Create(T item);
