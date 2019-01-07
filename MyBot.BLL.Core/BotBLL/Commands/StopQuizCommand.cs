@@ -16,14 +16,14 @@ namespace MyBot.BLL.Core.Commands
 
         public override async Task<bool> ExecuteAsync(Message message, IBotService bot)
         {
-            var _message = message;
 
-            if(!BotService.ActiveQuiz.ContainsKey(_message.Chat.Id))
+
+            if(!BotService.ActiveQuiz.ContainsKey(message.Chat.Id))
             {
-                await bot.Client.SendTextMessageAsync(_message.Chat.Id, "В этом чате ничего не запущено! Чтобы запустить /Count");
+                await bot.Client.SendTextMessageAsync(message.Chat.Id, "В этом чате ничего не запущено! Чтобы запустить /Count");
             }
-            var _quizService = BotService.ActiveQuiz[_message.Chat.Id];
-            await _quizService.Stop();
+            var quizService = BotService.ActiveQuiz[message.Chat.Id];
+            quizService.Dispose();
             return true;
 
         }

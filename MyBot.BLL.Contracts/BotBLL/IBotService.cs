@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Telegram.Bot;
 
 namespace MyBot.BLL.Contracts
@@ -11,5 +13,7 @@ namespace MyBot.BLL.Contracts
 
         IQueryService QueryService { get; }
         IUserService UserService { get; }
+
+        //Dictionary<Int64, Quiz> ActiveQuiz;
     }
 }

@@ -33,7 +33,7 @@ namespace MyBot.BLL.Core
 
             //InitAsync = _SetWebhookAsync();
             //Add commands
-            ActiveQuiz = new Dictionary<Int64, IQuizService>(); 
+            ActiveQuiz = new Dictionary<Int64, Quiz>(); 
 
             commandsList = new List<Command>();
             commandsList.Add(new HelloCommand());
@@ -58,7 +58,7 @@ namespace MyBot.BLL.Core
                                    "стрелец", "козерог", "водолей", "рыба"};
         }
 
-        public static Dictionary<Int64, IQuizService> ActiveQuiz;
+        public static Dictionary<Int64, Quiz> ActiveQuiz;
 
         public TelegramBotClient Client { get; }
 

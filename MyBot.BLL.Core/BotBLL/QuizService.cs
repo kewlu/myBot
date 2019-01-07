@@ -39,7 +39,7 @@ namespace MyBot.BLL.Core
             for (; ;)
             {
                 if (_disposed) return;
-                Task<bool> T = Send(CurrentQuery.Name.ToString() + "    \n" + CurrentQuery.Answer/*.Length*/ + " Букв");
+                Task<bool> T = Send(CurrentQuery.Name.ToString() + "    \n" + CurrentQuery.Answer.Length + " Букв");
                 //_hint.UpdateHint();
                 Thread.Sleep(30000);
             }
@@ -69,7 +69,7 @@ namespace MyBot.BLL.Core
             }
             if(message.Text.ToLower().Equals(CurrentQuery.Answer))
             {
-                //await Stop(); 
+                //await Stop();
                 await Send("Верно ответил " + message.From.FirstName + " " + message.From.LastName);
                 UpdateScore(message);
                 CurrentQuery = NextQuery();
@@ -106,7 +106,7 @@ namespace MyBot.BLL.Core
            _userService.AddUser(_user);
            return true;
         }
-        //public 
+        //public
 
         #region Disposed pattern
 

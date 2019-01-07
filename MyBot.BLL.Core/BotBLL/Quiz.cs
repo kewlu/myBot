@@ -10,11 +10,11 @@ using MyBot.BLL.Contracts;
 using  MyBot.Entities;
 using User = MyBot.Entities.User;
 
-namespace MyBot.BLL.Core.BotBLL
+namespace MyBot.BLL.Core
 {
     public class Quiz : IDisposable
     {
-        private bool _disposed = false;
+        //private bool _disposed = false;
 
         private static TelegramBotClient Client { get; set; }
         private static long ChatId { get; set; }
@@ -33,55 +33,54 @@ namespace MyBot.BLL.Core.BotBLL
             QueryService = bot.QueryService;
             UserService = bot.UserService;
 
+            CurrentQuery = new Query();
             CurrentQuery = NextQuery();
+
             SetTimer();
         }
 
         private static void SetTimer()
         {
-            _quizTimer.Elapsed += UpdateQuiz;
+            Task T = Task.Run(() => ShowQuery()); 
+            _quizTimer = new System.Timers.Timer(30000);
+            _quizTimer.Elapsed += async (sender, e) => await UpdateQuiz();
             _quizTimer.AutoReset = true;
             _quizTimer.Enabled = true;
-            _quizTimer = new System.Timers.Timer(30000);
         }
 
-        private static void UpdateQuiz(Object source, ElapsedEventArgs e)
+        private static async Task UpdateQuiz()
         {
-            var T = ShowQuery();
+            await ShowQuery();
             //if(  )
         }
 
-        private static async Task<bool> ShowQuery()
+        private static async Task ShowQuery()
         {
             await Client.SendTextMessageAsync(ChatId,
                 CurrentQuery.Name.ToString() + "    \n" + CurrentQuery.Answer.Length + " Букв");
-            return true;
         }
-        public async Task<bool> CheckAnswer(Message message)
+        public async Task CheckAnswer(Message message)
         {
             if (message.Text == "/Next")
             {
                 CurrentQuery = NextQuery();
                 _quizTimer.Start();
-                return true;
             }
 
             if (message.Text.ToLower().Equals(CurrentQuery.Answer))
             {
-                await Client.SendTextMessageAsync(ChatId, "Верно ответил " + message.From.FirstName + " " + message.From.LastName);
+                await Client.SendTextMessageAsync(ChatId,
+                    "Верно ответил " + message.From.FirstName + " " + message.From.LastName);
                 UpdateScore(message);
                 CurrentQuery = NextQuery();
                 _quizTimer.Start();
-                return true;
             }
-
-            return false;
         }
 
         private Query NextQuery()
         {
             Random rand = new Random();
-            var randomId = rand.Next();
+            var randomId = rand.Next(1,7400);
             var query = QueryService.GetById(randomId);
             return query;
         }
@@ -110,11 +109,9 @@ namespace MyBot.BLL.Core.BotBLL
                 Score = 1
 
             };
-            UsersList.Add(user);
             UserService.AddUser(user);
             return true;
         }
-
 
         #region Disposed pattern
 

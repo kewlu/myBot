@@ -50,7 +50,7 @@ namespace MyBot.BLL.Core
 
             if (BotService.ActiveQuiz.ContainsKey(message.Chat.Id))
             {
-                await BotService.ActiveQuiz[message.Chat.Id].CheckMessage(message);
+                await BotService.ActiveQuiz[message.Chat.Id].CheckAnswer(message);
                 return;
             }
             return;

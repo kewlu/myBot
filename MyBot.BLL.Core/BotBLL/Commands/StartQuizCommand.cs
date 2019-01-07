@@ -21,19 +21,17 @@ namespace MyBot.BLL.Core.Commands
   
         public override async Task<bool> ExecuteAsync(Message message, IBotService bot)
         {
-            var _activeQuiz = BotService.ActiveQuiz;
-            var _message = message;
+            var activeQuiz = BotService.ActiveQuiz;
+            
 
-            await bot.Client.SendTextMessageAsync(message.Chat.Id, "Ну что ронарод погнали нахой!");
-            if (_activeQuiz.ContainsKey(_message.Chat.Id))
+            //await bot.Client.SendTextMessageAsync(message.Chat.Id, "Ну что ронарод погнали нахой!");
+            if (activeQuiz.ContainsKey(message.Chat.Id))
             {
-                await bot.Client.SendTextMessageAsync(_message.Chat.Id, "Уже запущено");
+                await bot.Client.SendTextMessageAsync(message.Chat.Id, "Уже запущено");
                 return true ;
             }
-            var _quizService = new QuizService(bot, message.Chat.Id);
-            BotService.ActiveQuiz.Add(_message.Chat.Id, _quizService);
-            Thread th = new Thread(_quizService.Start);
-            th.Start();
+            var quiz = new Quiz(bot, message);
+            activeQuiz.Add(message.Chat.Id, quiz);
             return true;
         }
     }
