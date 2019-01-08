@@ -13,21 +13,51 @@ namespace DevelopmentConsole
 {
     internal partial  class Program
     {
+        public static void Update(string answer, List<int> ClosedLetters, StringBuilder Hint)
+        {
+
+            if (ClosedLetters.Count == 1)
+            {
+                Console.WriteLine("Никто не угадал");
+                return;
+            }
+
+            var rand = new Random();
+            var j = rand.Next(ClosedLetters.Count);
+            var iol = ClosedLetters[j];
+            Hint[iol] = answer[iol];
+            ClosedLetters.Remove(iol);
+            Console.WriteLine(Hint + "\n");
+            //Console.ReadLine();
+        }
         private static void Main(string[] args)
         {
-            var connectionString = "Server=(localdb)\\mssqllocaldb;Database=botdb;Trusted_Connection=True;";
+            string answer = "012345678";
+            var Hint = new StringBuilder(new string('*', answer.Length));
+            var ClosedLetters = new List<int>();
 
-            var services = new ServiceCollection()
-                .AddTransient<IQueryService, QueryService>()
-                .AddTransient<IUserService, UserService>()
-                .AddTransient<IWorker, Worker>()
-                .AddTransient<IMainContext, MainContext>(contextProvider => { return new MainContext(connectionString); });
+            for (var i = 0; i < Hint.Length ; i++)
+            {
+                ClosedLetters.Add(i);
+            }
 
-            var serviceProvider = services.BuildServiceProvider();
+            for (int i = 0; i<10; i++)
+                Update(answer, ClosedLetters, Hint);
+            Console.ReadLine();
 
-            var queryService = serviceProvider.GetService<IQueryService>();
-            var userService = serviceProvider.GetService<IUserService>();
-            RunCycle(queryService, userService);
+            //var connectionString = "Server=(localdb)\\mssqllocaldb;Database=botdb;Trusted_Connection=True;";
+
+            //var services = new ServiceCollection()
+            //    .AddTransient<IQueryService, QueryService>()
+            //    .AddTransient<IUserService, UserService>()
+            //    .AddTransient<IWorker, Worker>()
+            //    .AddTransient<IMainContext, MainContext>(contextProvider => { return new MainContext(connectionString); });
+
+            //var serviceProvider = services.BuildServiceProvider();
+
+            //var queryService = serviceProvider.GetService<IQueryService>();
+            //var userService = serviceProvider.GetService<IUserService>();
+            //RunCycle(queryService, userService);
         }
 
         public static void RunCycle(IQueryService queryService, IUserService userService)

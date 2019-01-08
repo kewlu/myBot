@@ -38,7 +38,7 @@ namespace MyBot.BLL.Core
             commandsList = new List<Command>();
             commandsList.Add(new HelloCommand());
             commandsList.Add(new StartQuizCommand());
-            commandsList.Add(new StopQuizCommand());
+            //commandsList.Add(new StopQuizCommand());
             commandsList.Add(new ScoreCommand());
             //commandsList.Add(new WoLCommand());
       

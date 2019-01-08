@@ -20,7 +20,7 @@ namespace MyBot.BLL.Core.Commands
 
             if(!BotService.ActiveQuiz.ContainsKey(message.Chat.Id))
             {
-                await bot.Client.SendTextMessageAsync(message.Chat.Id, "В этом чате ничего не запущено! Чтобы запустить /Count");
+                //await bot.Client.SendTextMessageAsync(message.Chat.Id, "В этом чате ничего не запущено! Чтобы запустить /Count");
             }
             var quizService = BotService.ActiveQuiz[message.Chat.Id];
             quizService.Dispose();
