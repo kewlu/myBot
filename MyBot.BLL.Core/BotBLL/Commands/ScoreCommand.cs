@@ -2,10 +2,13 @@
 using MyBot.BLL.Core.Commands;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot.Types;
 using MyBot.Entities;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
+using User = Telegram.Bot.Types.User;
 
 namespace MyBot.BLL.Core.BotBLL.Commands
 {
@@ -25,9 +28,10 @@ namespace MyBot.BLL.Core.BotBLL.Commands
             var scoreTable = "Score table in this chat:\n";
             //List<User> userList = new List<User>();
             var userlist = userService.GetByChatId(chatId);
-            foreach (var _user in userlist)
+            var sorteduserlist = userlist.OrderByDescending(u => u.Score);
+            foreach (var user in sorteduserlist)
             {
-                scoreTable = scoreTable + String.Format("{0} : {1}\n", _user.Name, _user.Score);
+                scoreTable = scoreTable + String.Format("{0} : {1}\n", user.Name, user.Score);
             }
 
             await bot.Client.SendTextMessageAsync(chatId, scoreTable);

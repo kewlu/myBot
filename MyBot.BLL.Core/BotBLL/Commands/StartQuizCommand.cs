@@ -24,7 +24,7 @@ namespace MyBot.BLL.Core.Commands
             var activeQuiz = BotService.ActiveQuiz;
             
 
-            //await bot.Client.SendTextMessageAsync(message.Chat.Id, "Ну что ронарод погнали нахой!");
+            //await bot.Client.SendTextMessageAsync(message.Chat.Id, "Ну что ронарод погнали!");
             if (activeQuiz.ContainsKey(message.Chat.Id))
             {
                 await bot.Client.SendTextMessageAsync(message.Chat.Id, "Уже запущено");
