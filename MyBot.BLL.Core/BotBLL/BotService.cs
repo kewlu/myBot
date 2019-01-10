@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Telegram.Bot;
 using MyBot.BLL.Core.Commands;
-using System.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using MihaZupan;
 using System;

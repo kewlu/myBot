@@ -1,35 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using MyBot.BLL.Contracts;
-using  MyBot.Entities;
-using Remotion.Linq.Parsing.Structure.IntermediateModel;
+using MyBot.Entities;
 using User = MyBot.Entities.User;
 
 namespace MyBot.BLL.Core
 {
-    public class Quiz : IDisposable
+    public class Quiz : IAsyncInitialization, IDisposable
     {
         //private bool _disposed = false;
 
-        private static TelegramBotClient _client;
-        private static long _chatId;
-        public static IQueryService QueryService { get; set; }
-        public static IUserService UserService { get; set; }
+        private readonly TelegramBotClient _client;
+        private readonly long _chatId;
 
-        private static Query _currentQuery;
-        private static StringBuilder _hint;
-        private static List<int> _closedLetters;
+        public IQueryService QueryService { get; }
+        public IUserService UserService { get; }
 
-        private List<User> UsersList { get; set; }
+        private Query _currentQuery;
+        private StringBuilder _hint;
+        private List<int> _closedLetters;
 
-        private static System.Timers.Timer _quizTimer;
+        private List<User> _usersList;
+
+        private System.Timers.Timer _quizTimer;
 
         public Quiz(IBotService bot, Message message)
         {
@@ -42,18 +39,27 @@ namespace MyBot.BLL.Core
             _currentQuery = NextQuery();
 
             SetTimer();
+
+            Initialization = InitializationAsync();
         }
 
-        private static void SetTimer()
+
+        private void SetTimer()
         {
-            var T = Task.Run(() => ShowQuery().Wait());
             _quizTimer = new System.Timers.Timer(15000);
             _quizTimer.Elapsed += async (sender, e) => await UpdateQuery();
             _quizTimer.AutoReset = true;
             _quizTimer.Enabled = true;
         }
 
-        private static async Task UpdateQuery()
+        public Task Initialization { get; private set; }
+
+        private async Task InitializationAsync()
+        {
+            await ShowQuery();
+        }
+
+        private async Task UpdateQuery()
         {
             if (_closedLetters.Count == 1)
             {
@@ -74,7 +80,7 @@ namespace MyBot.BLL.Core
             await ShowQuery();
         }
 
-        private static async Task ShowQuery()
+        private async Task ShowQuery()
         {
             await _client.SendTextMessageAsync(_chatId,
                 _currentQuery.Name + " \n" + _hint);
@@ -102,7 +108,7 @@ namespace MyBot.BLL.Core
             _quizTimer.Start();
         }
 
-        private static Query NextQuery()
+        private Query NextQuery()
         {
             Random rand = new Random();
             var randomId = rand.Next(1,7400);
@@ -118,20 +124,20 @@ namespace MyBot.BLL.Core
             return query;
         }
 
-        private bool UpdateScore(Message message)
+        private void UpdateScore(Message message)
         {
-            if (UsersList == null)
-                UsersList = new List<User>(UserService.GetByChatId(_chatId));
+            if (_usersList == null)
+                _usersList = new List<User>(UserService.GetByChatId(_chatId));
 
-            if (UsersList != null)
+            if (_usersList != null)
             {
-                foreach (var u in UsersList)
+                foreach (var u in _usersList)
                 {
                     if (u.UserId == message.From.Id)
                     {
                         u.Score = u.Score + _closedLetters.Count;
                         UserService.UpdateUser(u);
-                        return true;
+                        return;
                     }
                 }
             }
@@ -145,22 +151,21 @@ namespace MyBot.BLL.Core
 
             };
             UserService.AddUser(user);
-            UsersList.Add(user);
-            return true;
+            _usersList.Add(user);
         }
 
         #region Disposed pattern
 
-        private bool disposed = false;
+        private bool _disposed = false;
         public virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!this._disposed)
             {
                 if (disposing)
                 {
                     this.Dispose();
                 }
-                this.disposed = true;
+                this._disposed = true;
             }
         }
         public void Dispose()
@@ -169,5 +174,6 @@ namespace MyBot.BLL.Core
             GC.SuppressFinalize(this);
         }
         #endregion
+
     }
 }
