@@ -34,3 +34,7 @@ packages/
 /MyBot.BLL.Core/Commands/WoLCommand.cs
 /MyBot/Properties/launchSettings.json
 /MyBot/DevelopmentConsole
+/DevelopmentConsole/ConsoleMethods.cs
+/DevelopmentConsole/DevelopmentConsole.csproj
+/DevelopmentConsole/ParserCommand.cs
+/DevelopmentConsole/Program.cs

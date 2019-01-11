@@ -63,8 +63,6 @@ namespace MyBot.BLL.Core
         {
             if (_closedLetters.Count == 1)
             {
-                
-                _currentQuery = null;
                 await _client.SendTextMessageAsync(_chatId,
                     "Никто не дал правильного ответа. \n" +
                     "Правильный ответ: " + _currentQuery.Answer);
@@ -91,15 +89,11 @@ namespace MyBot.BLL.Core
 
         public async Task CheckAnswer(Message message)
         {
-            if (_currentQuery == null)
-                return;
-
             if (!(message.Text.ToLower().Equals(_currentQuery.Answer)) && message.Text != "/Next")
                 return;
 
             if (message.Text.ToLower().Equals(_currentQuery.Answer))
             {
-                _currentQuery = null;
                 await _client.SendTextMessageAsync(_chatId,  
                     "Верно ответил " + message.From.FirstName + " " + message.From.LastName +
                     "и получает " + _closedLetters.Count + " баллов!\n", replyToMessageId: message.MessageId);
