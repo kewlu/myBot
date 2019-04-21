@@ -39,7 +39,7 @@ namespace MyBot.BLL.Core
             _currentQuery = NextQuery();
 
             SetTimer();
-
+            
             Initialization = InitializationAsync();
         }
 

@@ -10,8 +10,9 @@ namespace MyBot.BLL.Contracts
     {
         bool AddUser(User user);
         User GetById(Int64 Id);
-        //User GetByUserId(Int64 UserId);
+        List<User> GetByUserId(Int64 UserId);
         bool UpdateUser(User user);
         List<User> GetByChatId(Int64 chatId);
+        IEnumerable<User> GetAll();
     }
 }

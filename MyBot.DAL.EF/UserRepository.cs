@@ -10,7 +10,7 @@ namespace MyBot.DAL.EF
     public class UserRepository : IRepository<User>
     {
         private IMainContext db;
-
+         
         public UserRepository(IMainContext context)
         {
             db = context;

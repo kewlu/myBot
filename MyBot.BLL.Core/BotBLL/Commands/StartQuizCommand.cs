@@ -18,11 +18,11 @@ namespace MyBot.BLL.Core.Commands
         {
             return (command == this.Name);
         }
-  
+
         public override async Task<bool> ExecuteAsync(Message message, IBotService bot)
         {
             var activeQuiz = BotService.ActiveQuiz;
-            
+
 
             //await bot.Client.SendTextMessageAsync(message.Chat.Id, "Ну что ронарод погнали!");
             if (activeQuiz.ContainsKey(message.Chat.Id))

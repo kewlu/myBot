@@ -28,14 +28,24 @@ namespace MyBot.BLL.Core
             return true;
         }
 
-        public List<User> GetByChatId(long _chatId)
+        public List<User> GetByChatId(long chatId)
         {
-            return Database.Users.Find(x => x.ChatId == _chatId).ToList();
+            return Database.Users.Find(x => x.ChatId == chatId).ToList();
+        }
+
+        public IEnumerable<User> GetAll()
+        {
+            return Database.Users.GetAll();
         }
 
         public User GetById(long _Id)
         {
             return Database.Users.Get(_Id);
+        }
+
+        public List<User> GetByUserId(long userId)
+        {
+            return Database.Users.Find(x => x.UserId == userId).ToList();
         }
 
         public bool UpdateUser(User item)
@@ -44,16 +54,5 @@ namespace MyBot.BLL.Core
             Database.Save();
             return true;
         }
-
-
-        //public User GetByUserId(long UserId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public User GetByUserId(long _UserId)
-        //{
-        //    return Database.Users.Find()
-        //}
     }
 }

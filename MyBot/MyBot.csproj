@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,6 +15,11 @@
     <ProjectReference Include="..\MyBot.DAL.EF\MyBot.DAL.EF.csproj" />
     <ProjectReference Include="..\MyBot.DAL\MyBot.DAL.Contracts.csproj" />
     <ProjectReference Include="..\MyBot.Entities\MyBot.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

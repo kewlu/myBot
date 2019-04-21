@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Chats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<MyBot.Models.Chat>
+
+
+<h2>Chats</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberUsers)
+        </th>
+    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+         {
+             <tr>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.Id)
+                 </td>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.NumberUsers)
+                 </td>
+             </tr>
+         }
+    }
+
+</table>
+
