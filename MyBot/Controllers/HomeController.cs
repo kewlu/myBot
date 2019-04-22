@@ -15,12 +15,12 @@ namespace MyBot.Controllers
     public class HomeController : Controller
     {
         private IUserService UserService;
-        //public List<Chat> chats;
+
 
         public HomeController(IUserService uservice)
         {
             UserService = uservice;
-          //  chats = new List<Chat>();
+
 
         }
 

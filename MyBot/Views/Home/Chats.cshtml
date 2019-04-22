@@ -7,7 +7,7 @@
 @model IEnumerable<MyBot.Models.Chat>
 
 
-<h2>Chats</h2>
+<h2></h2>
 <table class="table">
     <tr>
         <th>
@@ -23,7 +23,7 @@
          {
              <tr>
                  <td>
-                     @Html.ActionLink(item.Id.ToString(), "ChatLeader", "Home", new {id=item.Id})
+                     @Html.ActionLink(item.Id.ToString(), "ChatLeader", "Home", new {chatid=item.Id})
                     @* @Html.DisplayFor(modelItem => item.Id)*@
                  </td>
                  <td>

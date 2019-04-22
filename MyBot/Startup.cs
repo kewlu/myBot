@@ -69,7 +69,11 @@ namespace MyBot.PL
                 routes.MapRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}"
-                    );
+                );
+                routes.MapRoute(
+                    null,
+                    "{chatid}",
+                    new {controller = "Home", action = "ChatLeader"});
             });
         }
     }
