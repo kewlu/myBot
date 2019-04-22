@@ -22,7 +22,7 @@ namespace MyBot.Models
         {
             if (Object.ReferenceEquals(obj, null)) return 0;
 
-            int hashProductCode = obj.ChatId.GetHashCode();
+            int hashProductCode = obj.UserId.GetHashCode();
 
             return hashProductCode;
         }

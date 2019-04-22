@@ -38,6 +38,7 @@ namespace MyBot.Controllers
                 var users = UserService.GetByChatId(elem.ChatId);
                 chats.Add(new Chat{Id = elem.ChatId, NumberUsers = users.Count});
             }
+            chats.Sort((e1, e2) => e2.NumberUsers.CompareTo(e1.NumberUsers));
             return View(chats);
         }
 
@@ -53,14 +54,22 @@ namespace MyBot.Controllers
                 {
                     score = score + scr.Score;
                 }
-
-                ladder.Add(new UserViewModel{Name = usr.Name, Score = score});
+                ladder.Add(new UserViewModel { Name = usr.Name, Score = score });
             }
 
+            
             ladder.Sort((e1, e2) => e2.Score.CompareTo(e1.Score));
 
             return View(ladder);
 
+        }
+
+        public IActionResult ChatLeader(long chatid)
+        {
+            var ladder = new List<UserViewModel>();
+            var users = UserService.GetByChatId(chatid);
+            users.Sort((e1, e2) => e2.Score.CompareTo(e1.Score));
+            return View(users);
         }
         
 
