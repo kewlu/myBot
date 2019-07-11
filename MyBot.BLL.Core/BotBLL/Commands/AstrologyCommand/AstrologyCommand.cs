@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using System.Net.Http;
+using AngleSharp.Dom.Css;
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using MyBot.BLL.Contracts;
@@ -44,8 +45,8 @@ namespace MyBot.BLL.Core.Commands.AstrologyCommand
             foreach (var elem in result)
             {
                 i++;
-                if ((i % 2 == 0) && (i != 22) && (i < 25))
-                    all += elem;                
+                if ((i % 2 == 0) && (i != 22) && (i < 25) && (elem != "Извините, этот гороскоп пока что отсутствует."))
+                    all += elem + " ";                
             }
             await bot.Client.SendTextMessageAsync(message.Chat.Id, all);
             return true;
